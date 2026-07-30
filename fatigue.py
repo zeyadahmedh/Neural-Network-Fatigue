@@ -67,7 +67,35 @@ def gradient_conflict(prev_grad: torch.Tensor,  current_grad:torch.Tensor):
 
 
 
+"""
+This class will be used to track the error values and passed 
+to the optimizer initialization
+"""
+class LossTracker():
+    def __init__(self, window_size=20):
+        self.history = []
+    def log(self, loss_value):
+        self.history.append(loss_value)
+    def get_history(self):
+        return self.history
 
+"""
+Here we are computing the changing of error signs throughout the values,
+considering the instabillity is whenever the loss value is a positive 
+and then goes to negative
+or vice versa.
+"""
+def error_oscillation_calculate(loss_array_tracker: LossTracker):
+    lossArray = loss_array_tracker.get_history()
+    if len(lossArray)<1:
+        return "NOT ENOUGH VALUES"
+    deltas = []
+    for i in range(len(lossArray)-1):
+        deltas.append(lossArray[i+1]-lossArray[i])
 
-def error_oscillation_calculate():
-    pass
+    numberOfFlipsOfSign=0    
+    for i in range(len(deltas)-1):
+        if deltas[i]*deltas[i+1]<0:
+            numberOfFlipsOfSign+=1
+    normalized = numberOfFlipsOfSign/(len(deltas)-1)
+    return normalized

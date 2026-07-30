@@ -675,6 +675,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "ipykernel" },
+    { name = "ipython" },
     { name = "matplotlib" },
     { name = "scikit-learn" },
     { name = "torch" },
@@ -684,6 +685,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "ipykernel", specifier = ">=7.3.0" },
+    { name = "ipython", specifier = ">=9.15.0" },
     { name = "matplotlib", specifier = ">=3.11.1" },
     { name = "scikit-learn", specifier = ">=1.9.0" },
     { name = "torch", specifier = ">=2.13.0" },
